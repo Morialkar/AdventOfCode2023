@@ -1,0 +1,10 @@
+default:
+  just --summary
+
+run:
+  swift run.swift
+
+lint:
+  swiftlint lint --strict
+
+everything: lint run

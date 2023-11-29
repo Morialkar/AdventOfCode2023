@@ -1,0 +1,14 @@
+set positional-arguments
+
+default: everything
+
+run:
+  swift run.swift
+
+day:
+  swift run.swift $(day)
+
+lint:
+  swiftlint lint --strict
+
+everything: lint run

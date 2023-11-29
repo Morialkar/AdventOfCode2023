@@ -1,0 +1,5 @@
+run:
+  swift run.swift
+
+lint:
+  swiftlint lint --strict
