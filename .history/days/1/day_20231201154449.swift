@@ -14,6 +14,8 @@ func getDigits(input: String) -> Int {
     break
   }
 
+  print(firstDigit, lastDigit, firstDigit + lastDigit, Int(firstDigit + lastDigit) ?? 0)
+
   guard let number = Int(firstDigit + lastDigit) else {
     fatalError("Invalid number")
   }
@@ -41,7 +43,7 @@ func getDigitsIncludingSubstrings(input: String) -> Int {
   var lastDigit = ""
 
   while firstDigit == "" {
-    for ind in 0..<input.count + 1 {
+    for ind in 0..<input.count {
       let substring = input.prefix(ind)
       let foundDigits = searchForDigit(input: String(substring))
 
@@ -53,7 +55,7 @@ func getDigitsIncludingSubstrings(input: String) -> Int {
   }
 
   while lastDigit == "" {
-    for ind in 0..<input.count + 1 {
+    for ind in 0..<input.count {
       let substring = input.suffix(ind)
       let foundDigits = searchForDigit(input: String(substring))
 
@@ -63,8 +65,6 @@ func getDigitsIncludingSubstrings(input: String) -> Int {
       }
     }
   }
-
-  print(firstDigit, lastDigit, firstDigit + lastDigit, Int(firstDigit + lastDigit) ?? 0)
 
   guard let number = Int(firstDigit + lastDigit) else {
     fatalError("Invalid number")

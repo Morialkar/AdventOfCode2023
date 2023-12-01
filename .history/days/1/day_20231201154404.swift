@@ -14,6 +14,8 @@ func getDigits(input: String) -> Int {
     break
   }
 
+  print(firstDigit, lastDigit, firstDigit + lastDigit, Int(firstDigit + lastDigit) ?? 0)
+
   guard let number = Int(firstDigit + lastDigit) else {
     fatalError("Invalid number")
   }
@@ -30,7 +32,7 @@ func searchForDigit(input: String) -> [(lowerBound: Int, higherBound: Int, digit
     if let lowerBound = input.range(of: digit)?.lowerBound,
       let higherBound = input.range(of: digit)?.upperBound
     {
-      foundDigits.append((lowerBound.encodedOffset, higherBound.encodedOffset, String(index)))
+      foundDigits.append((lowerBound.encodedOffset, higherBound.encodedOffset, index))
     }
   }
   return foundDigits
@@ -41,9 +43,9 @@ func getDigitsIncludingSubstrings(input: String) -> Int {
   var lastDigit = ""
 
   while firstDigit == "" {
-    for ind in 0..<input.count + 1 {
+    for ind in 0..<input.count {
       let substring = input.prefix(ind)
-      let foundDigits = searchForDigit(input: String(substring))
+      var foundDigits = searchForDigit(input: String(substring))
 
       if let firstFoundDigit = foundDigits.sorted(by: { $0.lowerBound < $1.lowerBound }).first {
         firstDigit = firstFoundDigit.digit
@@ -53,9 +55,9 @@ func getDigitsIncludingSubstrings(input: String) -> Int {
   }
 
   while lastDigit == "" {
-    for ind in 0..<input.count + 1 {
+    for ind in 0..<input.count {
       let substring = input.suffix(ind)
-      let foundDigits = searchForDigit(input: String(substring))
+      var foundDigits = searchForDigit(input: String(substring))
 
       if let lastFoundDigit = foundDigits.sorted(by: { $0.higherBound > $1.higherBound }).first {
         lastDigit = lastFoundDigit.digit

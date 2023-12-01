@@ -14,38 +14,34 @@ func getDigits(input: String) -> Int {
     break
   }
 
+  print(firstDigit, lastDigit, firstDigit + lastDigit, Int(firstDigit + lastDigit) ?? 0)
+
   guard let number = Int(firstDigit + lastDigit) else {
     fatalError("Invalid number")
   }
   return number
 }
 
-func searchForDigit(input: String) -> [(lowerBound: Int, higherBound: Int, digit: String)] {
-  let digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-  var foundDigits = [(lowerBound: Int, higherBound: Int, digit: String)]()
-  for (index, char) in input.enumerated() where char.isNumber {
-    foundDigits.append((index, index, String(char)))
-  }
-  for (index, digit) in digits.enumerated() {
-    if let lowerBound = input.range(of: digit)?.lowerBound,
-      let higherBound = input.range(of: digit)?.upperBound
-    {
-      foundDigits.append((lowerBound.encodedOffset, higherBound.encodedOffset, String(index)))
-    }
-  }
-  return foundDigits
-}
-
 func getDigitsIncludingSubstrings(input: String) -> Int {
   var firstDigit = ""
   var lastDigit = ""
+  let digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
   while firstDigit == "" {
-    for ind in 0..<input.count + 1 {
-      let substring = input.prefix(ind)
-      let foundDigits = searchForDigit(input: String(substring))
+    for i in 0..<input.count {
+      let substring = input.prefix(i)
+      var foundDigits = [(index: String.Index, digit: String)]()
+      for (index, char) in substring.enumerated() where char.isNumber {
+        foundDigits.append((index, String(char)))
+      }
 
-      if let firstFoundDigit = foundDigits.sorted(by: { $0.lowerBound < $1.lowerBound }).first {
+      for digit in digits {
+        if let index = substring.range(of: digit)?.lowerBound {
+          foundDigits.append((index, digit))
+        }
+      }
+
+      if let firstFoundDigit = foundDigits.sorted(by: { $0.index < $1.index }).first {
         firstDigit = firstFoundDigit.digit
         break
       }
@@ -53,11 +49,20 @@ func getDigitsIncludingSubstrings(input: String) -> Int {
   }
 
   while lastDigit == "" {
-    for ind in 0..<input.count + 1 {
-      let substring = input.suffix(ind)
-      let foundDigits = searchForDigit(input: String(substring))
+    for i in 0..<input.count {
+      let substring = input.suffix(i)
+      var foundDigits = [(index: String.Index, digit: String)]()
+      for (index, char) in substring.enumerated() where char.isNumber {
+        foundDigits.append((index, String(char)))
+      }
 
-      if let lastFoundDigit = foundDigits.sorted(by: { $0.higherBound > $1.higherBound }).first {
+      for digit in digits {
+        if let index = substring.range(of: digit)?.lowerBound {
+          foundDigits.append((index, digit))
+        }
+      }
+
+      if let lastFoundDigit = foundDigits.sorted(by: { $0.index > $1.index }).first {
         lastDigit = lastFoundDigit.digit
         break
       }
