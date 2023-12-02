@@ -5,7 +5,7 @@ default: run
 run:
   swift run.swift
 
-@day bar:
+@day:
   swift run.swift $1
 
 lint:

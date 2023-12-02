@@ -78,4 +78,4 @@ print("Answer to the first puzzle is:")
 print(validateGames(games: games, bag: [("red", 12), ("green", 13), ("blue", 14)]))
 
 print("Answer to the second puzzle is:")
-print(getTotalPowerOfMinimalGames(games: games))
+print(getTotalPowerOfMinimalGames(games: games)

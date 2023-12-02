@@ -42,40 +42,11 @@ func validateGames(games: [Game], bag: Bag) -> Int {
   return validGames
 }
 
-func getTotalPowerOfMinimalGames(games: [Game]) -> Int {
-  var totalPower = 0
-
-  for game in games {
-    var minimalAmountOfRed = 0
-    var minimalAmountOfGreen = 0
-    var minimalAmountOfBlue = 0
-
-    for pick in game.picks {
-      for item in pick {
-        switch item.color {
-        case "red":
-          minimalAmountOfRed = max(minimalAmountOfRed, item.amount)
-        case "green":
-          minimalAmountOfGreen = max(minimalAmountOfGreen, item.amount)
-        case "blue":
-          minimalAmountOfBlue = max(minimalAmountOfBlue, item.amount)
-        default:
-          break
-        }
-      }
-    }
-
-    totalPower += minimalAmountOfRed * minimalAmountOfGreen * minimalAmountOfBlue
-  }
-
-  return totalPower
-}
-
 let input = try String(contentsOfFile: "days/2/input.txt").components(separatedBy: "\n")
 let games: [Game] = input.map { parseGame(input: $0) }
 
 print("Answer to the first puzzle is:")
 print(validateGames(games: games, bag: [("red", 12), ("green", 13), ("blue", 14)]))
 
-print("Answer to the second puzzle is:")
-print(getTotalPowerOfMinimalGames(games: games))
+// print("Answer to the second puzzle is:")
+// print(replaced.reduce(0, +))
