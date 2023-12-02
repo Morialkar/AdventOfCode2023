@@ -26,10 +26,10 @@ func validateGames(games: [Game], bag: Bag) -> Int {
 
     for pick in game.picks {
       // validate that the bag can contain the pick
-      for bagItem in bag
-      where pick.contains(where: { $0.color == bagItem.color && $0.amount > bagItem.amount }) {
-        valid = false
-        break
+      for bagItem in bag where pick.contains(where: { $0.color == bagItem.color && $0.amount > bagItem.amount }) {
+          valid = false
+          break
+        }
       }
     }
 
